@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sana Tahir | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #05030d;
+  --p1:       #4c1d95;
+  --p2:       #7c3aed;
+  --p3:       #a855f7;
+  --p4:       #d8b4fe;
+  --text:     #f0eaff;
+  --muted:    #9b8ec4;
+  --card:     #0e0720;
+  --border:   rgba(124,58,237,0.2);
+}
+
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; overflow: hidden; }
+
+.bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(124,58,237,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 5% 90%,  rgba(76,29,149,0.14)  0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%);
+}
+.bg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.track {
+  position: relative; z-index: 1;
+  display: flex; height: 100vh;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.track::-webkit-scrollbar { display: none; }
+.track { scrollbar-width: none; }
+
+.slide {
+  scroll-snap-align: start;
+  flex: 0 0 100vw; min-width: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 60px 88px; overflow: hidden; position: relative;
+}
+
+.hero { text-align: center; }
+.tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--p3); margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(56px, 7.5vw, 100px); font-weight: 700; line-height: 1.0;
+  background: linear-gradient(150deg, #f0eaff 0%, #c084fc 45%, #7c3aed 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 10px;
+}
+.hero-role {
+  font-family: 'Cormorant', serif; font-style: italic;
+  font-size: clamp(15px, 1.8vw, 20px); color: var(--muted); margin-bottom: 30px;
+}
+.bio {
+  max-width: 440px; margin: 0 auto 36px;
+  font-size: 14px; line-height: 1.9; color: var(--muted);
+}
+.links { display: flex; gap: 12px; justify-content: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 26px; border-radius: 50px;
+  font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.5px; text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.3s;
+}
+.btn-fill {
+  background: linear-gradient(135deg, var(--p1), var(--p3));
+  color: #fff; box-shadow: 0 4px 28px rgba(124,58,237,0.35);
+}
+.btn-fill:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(124,58,237,0.5); }
+.btn-line {
+  background: transparent; color: var(--p4);
+  border: 1px solid rgba(168,85,247,0.4);
+}
+.btn-line:hover { background: rgba(124,58,237,0.1); }
+
+.sec-title { text-align: center; }
+.sec-num {
+  font-family: 'Cormorant', serif; font-style: italic;
+  font-size: 11px; color: rgba(168,85,247,0.4);
+  letter-spacing: 3px; margin-bottom: 20px;
+}
+.sec-h {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(48px, 7vw, 88px); font-weight: 700; line-height: 1.0;
+  margin-bottom: 20px;
+}
+.sec-h em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--p3), var(--p4));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sec-line {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, var(--p2), transparent);
+  margin: 0 auto 24px;
+}
+.sec-desc { font-size: 14px; color: var(--muted); max-width: 380px; line-height: 1.8; }
+
+.content-slide { align-items: flex-start; padding-top: 50px; padding-bottom: 50px; }
+.slide-label {
+  font-family: 'Cormorant', serif; font-style: italic;
+  font-size: clamp(28px, 3.5vw, 46px); font-weight: 600;
+  color: var(--text); margin-bottom: 28px;
+}
+
+.cards { display: flex; gap: 20px; width: 100%; }
+.cards.solo { justify-content: center; max-width: 72%; margin: 0 auto; }
+.card {
+  flex: 1; min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168,85,247,0.4);
+  box-shadow: 0 16px 44px rgba(124,58,237,0.18);
+}
+
+/* Portrait video container 9:16 */
+.vc {
+  width: 100%; aspect-ratio: 9/16;
+  max-height: calc(100vh - 180px);
+  position: relative; background: #000; overflow: hidden;
+}
+/* Landscape video container 16:9 */
+.vc-ls {
+  width: 100%; aspect-ratio: 16/9;
+  position: relative; background: #000; overflow: hidden;
+}
+
+/* YouTube iframes fill their container */
+.vc iframe, .vc-ls iframe {
+  width: 100%; height: 100%; border: 0; display: block;
+}
+
+/* Native video (UGC 1 direct upload) */
+.vc video {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}
+
+.nav {
+  position: fixed; right: 26px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px; z-index: 200;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(168,85,247,0.2); border: 1px solid rgba(168,85,247,0.3);
+  cursor: pointer; transition: all 0.3s;
+}
+.dot.active { background: var(--p3); box-shadow: 0 0 10px rgba(168,85,247,0.5); transform: scale(1.5); }
+.dot-sep { width: 1px; height: 8px; background: rgba(168,85,247,0.12); margin: 0 auto; }
+
+.arrow {
+  position: fixed; bottom: 26px;
+  background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25);
+  color: var(--p4); width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s; z-index: 200; font-size: 14px;
+}
+.arrow:hover { background: rgba(124,58,237,0.25); }
+#prev { left: 26px; } #next { left: 70px; }
+.ctr {
+  position: fixed; bottom: 32px; right: 26px;
+  font-size: 10px; letter-spacing: 3px; color: var(--muted); z-index: 200; font-weight: 600;
+}
+.ctr span { color: var(--p3); }
+
+.bar {
+  position: fixed; top: 0; left: 0; height: 1px;
+  background: linear-gradient(90deg, var(--p2), var(--p3));
+  transition: width 0.4s; z-index: 300;
+}
+
+.contact { text-align: center; }
+.c-email {
+  font-family: 'Cormorant', serif; font-size: clamp(15px, 1.8vw, 21px);
+  color: var(--p4); text-decoration: none;
+  border-bottom: 1px solid rgba(168,85,247,0.3);
+  padding-bottom: 3px; display: inline-block;
+  margin-bottom: 36px; transition: color 0.3s;
+}
+.c-email:hover { color: var(--text); }
+.copy {
+  position: absolute; bottom: 26px;
+  font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(155,142,196,0.3); font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+<svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <path d="M80,120 C140,80 200,110 190,170 C180,230 110,240 70,200 C30,160 20,160 80,120Z" fill="rgba(124,58,237,0.055)" />
+  <path d="M1300,180 C1370,140 1430,180 1420,250 C1410,320 1330,330 1280,280 C1230,230 1230,220 1300,180Z" fill="rgba(168,85,247,0.045)" />
+  <path d="M650,780 C730,740 800,780 790,860 C780,900 700,900 650,860 C600,820 570,820 650,780Z" fill="rgba(124,58,237,0.05)" />
+  <path d="M120,680 C170,650 220,670 215,720 C210,770 160,775 120,745 C80,715 70,710 120,680Z" fill="rgba(168,85,247,0.055)" />
+  <path d="M1360,620 C1410,590 1450,610 1445,660 C1440,710 1395,715 1360,685 C1325,655 1310,650 1360,620Z" fill="rgba(124,58,237,0.045)" />
+  <circle cx="400"  cy="160" r="3" fill="rgba(168,85,247,0.1)"/>
+  <circle cx="1100" cy="300" r="2" fill="rgba(124,58,237,0.12)"/>
+  <circle cx="750"  cy="650" r="3" fill="rgba(168,85,247,0.08)"/>
+  <circle cx="200"  cy="500" r="2" fill="rgba(124,58,237,0.1)"/>
+  <circle cx="1300" cy="800" r="3" fill="rgba(168,85,247,0.09)"/>
+</svg>
+</div>
+
+<div class="bar" id="bar" style="width:0%"></div>
+<nav class="nav" id="nav"></nav>
+<button class="arrow" id="prev">←</button>
+<button class="arrow" id="next">→</button>
+<div class="ctr" id="ctr"><span>01</span> / 12</div>
+
+<div class="track" id="track">
+
+<!-- 0 · HERO -->
+<section class="slide hero" data-s="intro">
+  <p class="tag">Portfolio</p>
+  <h1>Sana Tahir</h1>
+  <p class="hero-role">Creative & Social Media Strategist</p>
+  <p class="bio">Turning ideas into content that stops the scroll. AI-powered video, organic storytelling, and design that actually converts.</p>
+</section>
+
+<!-- 1 · AI CREATIVES TITLE -->
+<section class="slide sec-title" data-s="ai">
+  <p class="sec-num">01</p>
+  <h2 class="sec-h">AI<br><em>Creatives</em></h2>
+  <div class="sec-line"></div>
+  <p class="sec-desc">AI-powered video content, built to perform across every platform and format.</p>
+</section>
+
+<!-- 2 · AI / UGC -->
+<section class="slide content-slide" data-s="ai">
+  <p class="slide-label">UGC</p>
+  <div class="cards">
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/Wnu5KZFFQnk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/DQoBXjA8Msg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/eR2TVhwt550" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 3 · AI / Storytelling -->
+<section class="slide content-slide" data-s="ai">
+  <p class="slide-label">Storytelling</p>
+  <div class="cards solo">
+    <div class="card"><div class="vc-ls"><iframe src="https://www.youtube.com/embed/9UuubJ0obb4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 4 · AI / Cinematic -->
+<section class="slide content-slide" data-s="ai">
+  <p class="slide-label">Cinematic</p>
+  <div class="cards">
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/6ox1g6NYS2k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/5DhObsQF9lY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/NUTpOwp8TtE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 5 · AI / Product Showcases -->
+<section class="slide content-slide" data-s="ai">
+  <p class="slide-label">Product Showcases</p>
+  <div class="cards solo">
+    <div class="card"><div class="vc-ls"><iframe src="https://www.youtube.com/embed/7L12rqv2AP8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 6 · AI / Faceless -->
+<section class="slide content-slide" data-s="ai">
+  <p class="slide-label">Faceless Content</p>
+  <div class="cards">
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/ZVXgkr4zf3g" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/QXDLR58D5WI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/b_hwoaVNHgg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 7 · HUMAN-LED CREATIVES TITLE -->
+<section class="slide sec-title" data-s="organic">
+  <p class="sec-num">02</p>
+  <h2 class="sec-h">Human-led<br><em>Creatives</em></h2>
+  <div class="sec-line"></div>
+  <p class="sec-desc">Real, human-made content. Raw, relatable, built for genuine connection.</p>
+</section>
+
+<!-- 8 · Human / UGC -->
+<section class="slide content-slide" data-s="organic">
+  <p class="slide-label">UGC</p>
+  <div class="cards">
+    <div class="card"><div class="vc"><video src="ugc-1.mp4" controls playsinline></video></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/4LPFKPEkV7Q" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/Ox8vuIcSheY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 9 · Human / Talking Head -->
+<section class="slide content-slide" data-s="organic">
+  <p class="slide-label">Talking Head</p>
+  <div class="cards solo">
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/MWy_QZIvlog" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 10 · Human / Promotional -->
+<section class="slide content-slide" data-s="organic">
+  <p class="slide-label">Promotional</p>
+  <div class="cards">
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/JFwLO4I63kk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+    <div class="card"><div class="vc"><iframe src="https://www.youtube.com/embed/1OtNe4prSXM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- 11 · CONTACT -->
+<section class="slide contact" data-s="contact">
+  <p class="tag">Get in Touch</p>
+  <h2 style="font-family:'Cormorant',serif; font-size:clamp(44px,6vw,80px); font-weight:700; line-height:1.05; margin-bottom:18px;">
+    Got a project<br><em style="font-style:italic; background:linear-gradient(135deg,var(--p3),var(--p4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">in mind?</em>
+  </h2>
+  <p class="bio">Whether it's AI video, organic content, or design, let's make something worth sharing.</p>
+  <a href="mailto:sanatahir18.rf@gmail.com" class="c-email">sanatahir18.rf@gmail.com</a>
+  <div class="links">
+    <a href="mailto:sanatahir18.rf@gmail.com" class="btn btn-fill">Send a Message</a>
+    <a href="https://www.linkedin.com/in/sana-tahir-03a73b2ab/" target="_blank" class="btn btn-line">LinkedIn →</a>
+  </div>
+  <p class="copy">© 2025 Sana Tahir</p>
+</section>
+
+</div>
+
+<script>
+const track  = document.getElementById('track');
+const slides = document.querySelectorAll('.slide');
+const navEl  = document.getElementById('nav');
+const ctr    = document.getElementById('ctr');
+const bar    = document.getElementById('bar');
+const total  = slides.length;
+let cur = 0;
+
+slides.forEach((s, i) => {
+  if (i > 0 && s.dataset.s !== slides[i-1].dataset.s) {
+    const sep = document.createElement('div'); sep.className='dot-sep'; navEl.appendChild(sep);
+  }
+  const d = document.createElement('button');
+  d.className = 'dot' + (i===0?' active':'');
+  d.setAttribute('aria-label','Slide '+(i+1));
+  d.onclick = ()=>goTo(i);
+  navEl.appendChild(d);
+});
+
+function pad(n){return String(n).padStart(2,'0');}
+
+function update(){
+  const i = Math.round(track.scrollLeft / window.innerWidth);
+  if(i===cur && i!==0) return;
+  cur = Math.max(0, Math.min(total-1, i));
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('active',j===cur));
+  ctr.innerHTML = `<span>${pad(cur+1)}</span> / ${pad(total)}`;
+  bar.style.width = (cur/(total-1)*100)+'%';
+}
+
+function goTo(i){ slides[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}); cur=i; update(); }
+
+track.addEventListener('scroll', update, {passive:true});
+document.getElementById('prev').onclick = ()=>goTo(Math.max(0,cur-1));
+document.getElementById('next').onclick = ()=>goTo(Math.min(total-1,cur+1));
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(Math.min(total-1,cur+1));
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   goTo(Math.max(0,cur-1));
+});
+update();
+</script>
+</body>
+</html>
