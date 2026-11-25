@@ -204,6 +204,69 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
   color: rgba(155,142,196,0.3); font-weight: 600;
 }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .slide {
+    padding: 44px 18px 60px;
+  }
+  .content-slide {
+    padding-top: 44px; padding-bottom: 64px;
+    align-items: center;
+  }
+  .slide-label {
+    font-size: 26px; text-align: center; width: 100%;
+  }
+
+  /* Cards stack vertically on mobile — one per row, full width */
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+  }
+  .cards::-webkit-scrollbar { display: none; }
+  .cards { scrollbar-width: none; }
+
+  .cards .card {
+    width: 92vw;
+    flex: none;
+  }
+  .cards.solo { max-width: 100%; }
+  .cards.solo .card { width: 92vw; }
+
+  .vc { max-height: 55vh; }
+  /* Allow slide to scroll vertically on mobile for multi-card sections */
+  .content-slide { overflow-y: auto; justify-content: flex-start; }
+
+  /* Hero */
+  .hero h1 { font-size: clamp(42px, 11vw, 68px); }
+  .hero-role { font-size: 15px; }
+  .bio { font-size: 13px; }
+  .links { flex-direction: column; align-items: center; gap: 10px; }
+
+  /* Section titles */
+  .sec-h { font-size: clamp(38px, 10vw, 60px); }
+  .sec-desc { font-size: 13px; }
+
+  /* Nav dots — move closer to edge */
+  .nav { right: 10px; gap: 6px; }
+  .dot { width: 5px; height: 5px; }
+
+  /* Arrows */
+  #prev { left: 16px; } #next { left: 60px; }
+
+  /* Swipe hint under multi-card slides */
+  .cards[data-hint]::after {
+    content: 'swipe →';
+    position: absolute; bottom: -20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px; letter-spacing: 2px; color: rgba(168,85,247,0.4);
+    text-transform: uppercase; white-space: nowrap;
+  }
+}
 </style>
 </head>
 <body>
